@@ -7,7 +7,7 @@
 <h1>Alumnos</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Registrar nuevo Alumno</a>
 </p>
 <table class="table">
     <thead>
@@ -43,9 +43,9 @@
                 @Html.DisplayFor(modelItem => item.Grado)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Alumnoid">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Alumnoid">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Alumnoid">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Alumnoid">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.Alumnoid">Detalles</a> |
+                <a asp-action="Delete" asp-route-id="@item.Alumnoid">Eliminar</a>
             </td>
         </tr>
 }
