@@ -1,0 +1,98 @@
+﻿@model IEnumerable<ColegioSanJose.ViewModels.PromedioAlumnoViewModel>
+
+@{
+    ViewData["Title"] = "Promedios";
+}
+
+<h1>Promedios Académicos</h1>
+
+<div class="row">
+    <div class="col-md-8">
+        <canvas id="promedioChart" style="max-height: 400px;"></canvas>
+    </div>
+</div>
+
+<hr />
+
+<p>
+    Reporte del promedio de notas calculadas a partir de todos los expedientes registrados.
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nombre Completo Alumno
+            </th>
+            <th>
+                Promedio General
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NombreCompletoAlumno)
+                </td>
+                <td>
+                    <strong>@item.PromedioNotas.ToString("N2")</strong>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <script>
+        
+        var labels = @Html.Raw(ViewData["AlumnoLabels"]);
+        var data = @Html.Raw(ViewData["PromedioData"]);
+
+        const ctx = document.getElementById('promedioChart');
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Promedio de Notas',
+                    data: data,
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(153, 102, 255, 0.6)',
+                        'rgba(255, 159, 64, 0.6)',
+                        'rgba(255, 99, 132, 0.6)'
+                    ],
+                    borderColor: [
+                        'rgb(75, 192, 192)',
+                        'rgb(153, 102, 255)',
+                        'rgb(255, 159, 64)',
+                        'rgb(255, 99, 132)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 10
+                    }
+                }
+            }
+        });
+    </script>
+}
+
+<div>
+    <a asp-action="Index">Volver al Listado de Expedientes</a>
+</div>
